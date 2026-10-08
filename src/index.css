@@ -466,14 +466,14 @@ img {
   position: absolute;
   inset: -18px 18px 18px -18px;
   border: 1px solid var(--color-gold);
-  border-radius: 220px 220px 6px 6px;
+  border-radius: 6px;
   opacity: 0.5;
 }
 
 .hero-img {
   position: relative;
   aspect-ratio: 3 / 4;
-  border-radius: 220px 220px 6px 6px;
+  border-radius: 6px;
   overflow: hidden;
   background: var(--color-beige-dark);
   box-shadow: 0 30px 70px rgba(45, 74, 62, 0.22);
@@ -669,7 +669,7 @@ img {
 .acc-img {
   width: 340px;
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 6px;
   overflow: hidden;
   background: var(--color-beige-dark);
   box-shadow: 0 20px 56px rgba(45, 74, 62, 0.16);
