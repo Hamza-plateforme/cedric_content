@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type CSSProperties, type ReactNode } from 'react'
 import imgHero from '@/imports/408-1.jpg'
 import imgPortrait from '@/imports/1011-3.jpg'
 import imgAccompagnements from '@/imports/1012-2.jpg'
@@ -16,364 +16,423 @@ const IMG = {
   portrait: imgPortrait,
   accompagnements: imgAccompagnements,
   temoignage: 'https://images.unsplash.com/photo-1595104615356-cbe9c4364513?w=700&h=800&fit=crop&auto=format',
-  forest: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&h=900&fit=crop&auto=format',
+}
+
+const NAV = [
+  { href: '#qui-suis-je', label: 'Qui suis-je ?' },
+  { href: '#accompagnements', label: 'Mes accompagnements' },
+  { href: '#livre', label: 'Mon livre' },
+  { href: '#tarifs', label: 'Tarifs' },
+  { href: '#contact', label: 'Contact' },
+]
+
+// Icônes au trait, dans l'esprit nature / apaisement
+const ICONS: Record<string, ReactNode> = {
+  coeur: <path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 5.65-7 10-7 10z" />,
+  feuille: <><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14" /><path d="M5 19l8-8" /></>,
+  soleil: <><circle cx="12" cy="12" r="4" /><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" /></>,
+  chemin: <><path d="M4 20c4-2 4-6 8-8s4-6 8-8" /><circle cx="4" cy="20" r="1.5" /><circle cx="20" cy="4" r="1.5" /></>,
+  fleur: <><circle cx="12" cy="12" r="2.5" /><path d="M12 9.5C12 6 10 4 12 3c2 1 0 3 0 6.5M14.5 12c3.5 0 5.5-2 6.5 0-1 2-3 0-6.5 0M12 14.5c0 3.5 2 5.5 0 6.5-2-1 0-3 0-6.5M9.5 12C6 12 4 14 3 12c1-2 3 0 6.5 0" /></>,
+  vague: <><path d="M3 9c3-2 6 2 9 0s6-2 9 0" /><path d="M3 15c3-2 6 2 9 0s6-2 9 0" /></>,
 }
 
 const ACCOMPAGNEMENTS = [
-  { titre: 'Comprendre tes émotions', desc: 'Apprendre à reconnaître, accueillir et traverser tes émotions sans en être submergé(e).', icon: '◈' },
-  { titre: 'Guérir les blessures intérieures', desc: 'Aller à la rencontre de tes blessures profondes pour les transformer avec douceur.', icon: '◇' },
-  { titre: 'Retrouver confiance en soi', desc: 'Reconstruire un rapport solide et bienveillant à toi-même, pas à pas.', icon: '◉' },
-  { titre: 'Comprendre tes addictions', desc: 'Explorer les besoins derrière tes compulsions pour te libérer sans te juger.', icon: '◈' },
-  { titre: "Retrouver l'amour de soi", desc: 'Cultiver une relation aimante et respectueuse avec qui tu es vraiment.', icon: '◇' },
-  { titre: 'Apaiser ton mental', desc: 'Sortir des ruminations, retrouver le calme et habiter davantage le moment présent.', icon: '◉' },
+  { titre: 'Comprendre tes émotions', desc: 'Apprendre à reconnaître, accueillir et traverser tes émotions sans en être submergé(e).', icon: 'vague' },
+  { titre: 'Guérir les blessures intérieures', desc: 'Aller à la rencontre de tes blessures profondes pour les transformer avec douceur.', icon: 'feuille' },
+  { titre: 'Retrouver confiance en soi', desc: 'Reconstruire un rapport solide et bienveillant à toi-même, pas à pas.', icon: 'chemin' },
+  { titre: 'Comprendre tes addictions', desc: 'Explorer les besoins derrière tes compulsions pour te libérer sans te juger.', icon: 'fleur' },
+  { titre: "Retrouver l'amour de soi", desc: 'Cultiver une relation aimante et respectueuse avec qui tu es vraiment.', icon: 'coeur' },
+  { titre: 'Apaiser ton mental', desc: 'Sortir des ruminations, retrouver le calme et habiter davantage le moment présent.', icon: 'soleil' },
 ]
 
-function GoldLine() {
-  return <div style={{ width: 48, height: 2, backgroundColor: 'var(--color-gold)', marginBottom: 24 }} />
-}
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function Icon({ name, size = 20 }: { name: string; size?: number }) {
   return (
-    <a
-      href={href}
-      style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 400, letterSpacing: '0.08em', color: 'var(--color-cream)', textDecoration: 'none', opacity: 0.85, transition: 'opacity 0.2s' }}
-      onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-      onMouseLeave={e => (e.currentTarget.style.opacity = '0.85')}
-    >
-      {children}
-    </a>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {ICONS[name]}
+    </svg>
   )
 }
 
-function SocialIcon({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+function Arrow() {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={{ color: 'var(--color-cream)', opacity: 0.8, transition: 'opacity 0.2s', display: 'flex', alignItems: 'center' }}
-      onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-      onMouseLeave={e => (e.currentTarget.style.opacity = '0.8')}>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
+function FacebookIcon({ size = 16 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+}
+
+function InstagramIcon({ size = 16 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+}
+
+function BookIcon({ size = 16 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2.5z" /><path d="M8 7h7" /></svg>
+}
+
+function Socials() {
+  return (
+    <div className="socials">
+      <a className="social-icon" href={LIENS.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FacebookIcon /></a>
+      <a className="social-icon" href={LIENS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+    </div>
+  )
+}
+
+function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
+  return (
+    <div className={`reveal ${className}`} style={{ '--delay': `${delay}ms` } as CSSProperties}>
       {children}
-    </a>
+    </div>
   )
 }
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Apparition douce des blocs au défilement
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal')
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+          io.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' })
+    els.forEach(el => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  // Lien de navigation actif selon la section visible
+  useEffect(() => {
+    const sections = NAV.map(n => document.querySelector(n.href)).filter(Boolean) as Element[]
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(`#${entry.target.id}`)
+      })
+    }, { rootMargin: '-45% 0px -50% 0px' })
+    sections.forEach(s => io.observe(s))
+    return () => io.disconnect()
+  }, [])
+
+  const closeMenu = () => setMenuOpen(false)
+
   return (
-    <div style={{ fontFamily: 'var(--font-body)', backgroundColor: 'var(--color-cream)' }}>
+    <div>
 
       {/* ── HEADER ── */}
-      <header style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        backgroundColor: scrolled ? 'rgba(45,74,62,0.97)' : 'var(--color-forest)',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        boxShadow: scrolled ? '0 1px 20px rgba(0,0,0,0.18)' : 'none',
-        transition: 'all 0.35s ease',
-        padding: '0 32px',
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 70 }}>
-
-          {/* Logo */}
-          <a href="#accueil" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <div style={{ fontFamily: 'var(--font-display)', color: 'var(--color-cream)', lineHeight: 1 }}>
-              <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '0.12em' }}>CÉDRIC CONCHE</div>
-              <div style={{ fontSize: 11, fontWeight: 300, letterSpacing: '0.2em', color: 'var(--color-gold-light)', marginTop: 2 }}>renaître à soi m'aime</div>
-            </div>
+      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+        <div className="wrap header-inner">
+          <a href="#accueil" className="logo" onClick={closeMenu}>
+            <div className="logo-name">CÉDRIC CONCHE</div>
+            <div className="logo-tag">renaître à soi m'aime</div>
           </a>
 
-          {/* Desktop Nav */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }} className="hidden-mobile">
-            <NavLink href="#qui-suis-je">Qui suis-je ?</NavLink>
-            <NavLink href="#accompagnements">Mes accompagnements</NavLink>
-            <NavLink href="#livre">Mon livre</NavLink>
-            <NavLink href="#tarifs">Tarifs</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
-
-            <div style={{ width: 1, height: 18, backgroundColor: 'rgba(255,255,255,0.2)' }} />
-
-            <SocialIcon href={LIENS.facebook} label="Facebook">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </SocialIcon>
-            <SocialIcon href={LIENS.instagram} label="Instagram">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-            </SocialIcon>
-
-            <a href="#contact" style={{
-              fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500, letterSpacing: '0.1em',
-              color: 'var(--color-forest)', backgroundColor: 'var(--color-gold)',
-              padding: '9px 22px', borderRadius: 2, textDecoration: 'none',
-              transition: 'background-color 0.2s',
-            }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--color-gold-light)')}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-gold)')}
-            >
-              Échanger
-            </a>
+          <nav className="nav" aria-label="Navigation principale">
+            {NAV.map(n => (
+              <a key={n.href} href={n.href} className={`nav-link ${active === n.href ? 'active' : ''}`}>{n.label}</a>
+            ))}
+            <div className="nav-sep" />
+            <Socials />
+            <a href="#contact" className="btn btn-gold btn-sm">Échanger</a>
           </nav>
 
-          {/* Mobile burger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-cream)', display: 'none' }}
-            className="show-mobile"
-            aria-label="Menu"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <button className={`burger ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu" aria-expanded={menuOpen}>
+            <span /><span /><span />
           </button>
         </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div style={{ backgroundColor: 'var(--color-forest)', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '20px 32px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {['#qui-suis-je:Qui suis-je ?', '#accompagnements:Mes accompagnements', '#livre:Mon livre', '#tarifs:Tarifs', '#contact:Contact'].map(s => {
-              const [href, label] = s.split(':')
-              return <NavLink key={href} href={href}>{label}</NavLink>
-            })}
-            <a href="#contact" onClick={() => setMenuOpen(false)} style={{
-              display: 'inline-block', marginTop: 8,
-              fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500, letterSpacing: '0.1em',
-              color: 'var(--color-forest)', backgroundColor: 'var(--color-gold)',
-              padding: '10px 24px', borderRadius: 2, textDecoration: 'none', textAlign: 'center',
-            }}>
-              Échanger
-            </a>
-          </div>
-        )}
-      </header>
-
-      {/* ── 1. ACCUEIL ── */}
-      <section id="accueil" style={{ minHeight: '100vh', backgroundColor: 'var(--color-cream)', display: 'flex', alignItems: 'center', paddingTop: 70 }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '80px 48px', display: 'grid', gridTemplateColumns: '1fr 420px', gap: 80, alignItems: 'center', width: '100%' }} className="hero-grid">
+        <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
           <div>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 24 }}>
-              Renaître à soi m'aime
-            </p>
-            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(44px, 6vw, 80px)', fontWeight: 300, lineHeight: 1.1, color: 'var(--color-forest)', marginBottom: 28 }}>
-              Transforme tes blessures en force et retrouve ta paix intérieure
-            </h1>
-            <GoldLine />
-            <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--color-text-muted)', maxWidth: 520, marginBottom: 44, fontWeight: 300 }}>
-              Un accompagnement pour comprendre ce qui te traverse, retrouver ton axe et avancer avec plus de paix intérieure.
-            </p>
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" style={{
-                fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, letterSpacing: '0.1em',
-                color: 'var(--color-cream)', backgroundColor: 'var(--color-forest)',
-                padding: '14px 32px', borderRadius: 2, textDecoration: 'none', transition: 'background-color 0.2s',
-              }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--color-forest-light)')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--color-forest)')}
-              >
-                Découvrir mon livre
-              </a>
-              <a href="#accompagnements" style={{
-                fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, letterSpacing: '0.1em',
-                color: 'var(--color-forest)', backgroundColor: 'transparent',
-                padding: '14px 32px', borderRadius: 2, textDecoration: 'none',
-                border: '1px solid var(--color-forest)', transition: 'all 0.2s',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--color-forest)'; e.currentTarget.style.color = 'var(--color-cream)' }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--color-forest)' }}
-              >
-                Mes accompagnements
-              </a>
-            </div>
-          </div>
-
-          <div style={{ position: 'relative' }}>
-            <div style={{ position: 'absolute', top: -16, left: -16, right: 16, bottom: 16, border: '1px solid var(--color-gold)', borderRadius: 4, opacity: 0.4 }} />
-            <div style={{ width: '100%', aspectRatio: '3/4', borderRadius: 4, overflow: 'hidden', backgroundColor: 'var(--color-beige-dark)', boxShadow: '0 24px 64px rgba(45,74,62,0.18)', position: 'relative' }}>
-              <img src={IMG.hero} alt="Cédric Conche" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(45,74,62,0.3) 0%, transparent 50%)' }} />
+            <div className="wrap mobile-menu-inner">
+              {NAV.map(n => (
+                <a key={n.href} href={n.href} className="nav-link" onClick={closeMenu}>{n.label}</a>
+              ))}
+              <div className="mobile-menu-foot">
+                <Socials />
+                <a href="#contact" className="btn btn-gold btn-sm" onClick={closeMenu}>Échanger</a>
+              </div>
             </div>
           </div>
         </div>
+      </header>
+
+      {/* ── 1. ACCUEIL ── */}
+      <section id="accueil" className="hero">
+        <div className="wrap hero-grid">
+          <div>
+            <Reveal>
+              <p className="eyebrow">Renaître à soi m'aime</p>
+            </Reveal>
+            <Reveal delay={120}>
+              <h1 className="hero-title">
+                Transforme tes blessures en <em>force</em> et retrouve ta <em>paix intérieure</em>
+              </h1>
+            </Reveal>
+            <Reveal delay={240}>
+              <div className="gold-line" />
+              <p className="lead" style={{ maxWidth: 520 }}>
+                Un accompagnement pour comprendre ce qui te traverse, retrouver ton axe et avancer avec plus de paix intérieure.
+              </p>
+            </Reveal>
+            <Reveal delay={360}>
+              <div className="hero-actions">
+                <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" className="btn btn-forest">
+                  Découvrir mon livre <Arrow />
+                </a>
+                <a href="#accompagnements" className="btn btn-outline">Mes accompagnements</a>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={200} className="hero-media">
+            <div className="hero-frame" />
+            <div className="hero-img">
+              <img src={IMG.hero} alt="Cédric Conche" />
+            </div>
+            <a href="#tarifs" className="hero-badge">
+              <span className="hero-badge-dot" />
+              <span>
+                <span className="hero-badge-label" style={{ display: 'block' }}>Offert</span>
+                <span className="hero-badge-value" style={{ display: 'block' }}>Premier échange</span>
+              </span>
+            </a>
+          </Reveal>
+        </div>
+
+        <a href="#qui-suis-je" className="scroll-cue" aria-label="Défiler vers la suite">
+          Découvrir
+          <span />
+        </a>
       </section>
 
       {/* ── 2. QUI SUIS-JE ── */}
-      <section id="qui-suis-je" style={{ backgroundColor: 'var(--color-beige)', padding: '120px 48px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }} className="two-col-grid">
-          <div style={{ position: 'relative' }}>
-            <div style={{ width: '100%', aspectRatio: '4/5', borderRadius: 4, overflow: 'hidden', backgroundColor: 'var(--color-beige-dark)', boxShadow: '0 20px 60px rgba(45,74,62,0.14)' }}>
-              <img src={IMG.portrait} alt="Portrait de Cédric Conche" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+      <section id="qui-suis-je" className="section" style={{ backgroundColor: 'var(--color-beige)' }}>
+        <div className="wrap grid-2">
+          <Reveal className="about-media">
+            <div className="about-dots" />
+            <div className="about-img">
+              <img src={IMG.portrait} alt="Portrait de Cédric Conche" />
             </div>
-            <div style={{ position: 'absolute', bottom: -24, right: -24, backgroundColor: 'var(--color-forest)', padding: '20px 28px', borderRadius: 2 }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--color-gold)', letterSpacing: '0.15em' }}>ACCOMPAGNATEUR INTÉRIEUR</p>
+            <div className="about-tag">
+              <p>ACCOMPAGNATEUR INTÉRIEUR</p>
             </div>
-          </div>
+          </Reveal>
 
-          <div style={{ paddingLeft: 16 }}>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-              Qui suis-je ?
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 400, lineHeight: 1.15, color: 'var(--color-forest)', marginBottom: 24 }}>
-              Un accompagnement avant tout humain
-            </h2>
-            <GoldLine />
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: 16, fontWeight: 300 }}>
-              Un mari, un papa, un homme qui a consacré 20 années de sa vie à l'armée, dont 6 ans comme fusilier marin et 14 ans comme marin-pompier de Marseille.
-            </p>
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: 16, fontWeight: 300 }}>
-              Grand sportif, amoureux de la nature et profondément attaché à l'humain, je suis également hypersensible et empathique.
-            </p>
-            <div style={{ borderLeft: '2px solid var(--color-gold)', paddingLeft: 20, marginBottom: 40, marginTop: 24 }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontStyle: 'italic', color: 'var(--color-forest)', lineHeight: 1.6, marginBottom: 8 }}>Mon intention</p>
-              <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--color-text-muted)', fontWeight: 300, marginBottom: 4 }}>Je ne suis pas là pour te dire qui tu es.</p>
-              <p style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--color-text-muted)', fontWeight: 300, marginBottom: 12 }}>Je suis là pour t'accompagner afin que tu puisses le découvrir par toi-même.</p>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 500, color: 'var(--color-gold)', letterSpacing: '0.05em' }}>Comprendre. Accepter. Transformer. Renaître à soi m'aime.</p>
-            </div>
-            <a href="#accompagnements" style={{ display: 'inline-block', fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, letterSpacing: '0.1em', color: 'var(--color-cream)', backgroundColor: 'var(--color-forest)', padding: '13px 30px', borderRadius: 2, textDecoration: 'none' }}>
-              En savoir plus
-            </a>
+          <div>
+            <Reveal>
+              <p className="eyebrow">Qui suis-je ?</p>
+              <h2 className="title">Un accompagnement avant tout <em>humain</em></h2>
+              <div className="gold-line" />
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="text" style={{ marginBottom: 16 }}>
+                Un mari, un papa, un homme qui a consacré 20 années de sa vie à l'armée, dont 6 ans comme fusilier marin et 14 ans comme marin-pompier de Marseille.
+              </p>
+              <p className="text">
+                Grand sportif, amoureux de la nature et profondément attaché à l'humain, je suis également hypersensible et empathique.
+              </p>
+            </Reveal>
+            <Reveal delay={200}>
+              <div className="intention">
+                <span className="intention-quote" aria-hidden="true">“</span>
+                <p className="intention-title">Mon intention</p>
+                <p className="text" style={{ fontSize: 15 }}>Je ne suis pas là pour te dire qui tu es.</p>
+                <p className="text" style={{ fontSize: 15 }}>Je suis là pour t'accompagner afin que tu puisses le découvrir par toi-même.</p>
+                <p className="intention-motto">Comprendre. Accepter. Transformer. Renaître à soi m'aime.</p>
+              </div>
+              <a href="#accompagnements" className="btn btn-forest">En savoir plus <Arrow /></a>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ── 3. ACCOMPAGNEMENTS ── */}
-      <section id="accompagnements" style={{ backgroundColor: 'var(--color-cream)', padding: '120px 48px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 80, alignItems: 'start', marginBottom: 72 }} className="acc-top-grid">
-            <div style={{ maxWidth: 640 }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-                Mes accompagnements
-              </p>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 400, lineHeight: 1.15, color: 'var(--color-forest)', marginBottom: 24 }}>
-                Un espace pour te retrouver
-              </h2>
-              <GoldLine />
-              <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--color-text-muted)', fontWeight: 300, marginBottom: 16 }}>
-                Tu n'as peut-être pas besoin de changer.<br />Tu as peut-être simplement besoin de te retrouver.
-              </p>
-            </div>
-            <div style={{ flexShrink: 0 }}>
-              <div style={{ width: 320, height: 320, borderRadius: 12, overflow: 'hidden', backgroundColor: 'var(--color-beige-dark)', boxShadow: '0 16px 48px rgba(45,74,62,0.14)' }}>
-                <img src={IMG.accompagnements} alt="Cédric Conche en forêt" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              </div>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }} className="cards-grid">
-            {ACCOMPAGNEMENTS.map((item) => (
-              <div key={item.titre} style={{ backgroundColor: 'var(--color-beige)', borderRadius: 8, padding: '36px 32px', border: '1px solid var(--color-beige-dark)' }}>
-                <div style={{ width: 36, height: 36, backgroundColor: 'var(--color-forest)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-                  <span style={{ color: 'var(--color-gold)', fontSize: 16 }}>{item.icon}</span>
-                </div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 500, color: 'var(--color-forest)', marginBottom: 12, lineHeight: 1.2 }}>
-                  {item.titre}
-                </h3>
-                <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--color-text-muted)', fontWeight: 300 }}>
-                  {item.desc}
+      <section id="accompagnements" className="section" style={{ backgroundColor: 'var(--color-cream)' }}>
+        <div className="wrap">
+          <div className="acc-top">
+            <Reveal>
+              <div style={{ maxWidth: 640 }}>
+                <p className="eyebrow">Mes accompagnements</p>
+                <h2 className="title">Un espace pour te <em>retrouver</em></h2>
+                <div className="gold-line" />
+                <p className="lead">
+                  Tu n'as peut-être pas besoin de changer.<br />Tu as peut-être simplement besoin de te retrouver.
                 </p>
               </div>
+            </Reveal>
+            <Reveal delay={150}>
+              <div className="acc-img">
+                <img src={IMG.accompagnements} alt="Cédric Conche en forêt" />
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="cards">
+            {ACCOMPAGNEMENTS.map((item, i) => (
+              <Reveal key={item.titre} delay={(i % 3) * 100}>
+                <article className="card" style={{ height: '100%' }}>
+                  <div className="card-head">
+                    <div className="card-icon"><Icon name={item.icon} /></div>
+                    <span className="card-num">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <h3>{item.titre}</h3>
+                  <p>{item.desc}</p>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── 4. MON LIVRE ── */}
-      <section id="livre" style={{ backgroundColor: 'var(--color-forest)', padding: '120px 48px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }} className="two-col-grid">
-          <div>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-              Mon livre
+      <section id="livre" className="section book-section">
+        <div className="wrap grid-2">
+          <Reveal>
+            <p className="eyebrow">Mon livre</p>
+            <h2 className="title">Renaître à soi m'aime</h2>
+            <div className="gold-line" />
+            <p className="text">
+              Un livre écrit au cœur de l'expérience — celui de traverser ses propres tempêtes intérieures et d'en revenir transformé.
             </p>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4vw, 60px)', fontWeight: 300, lineHeight: 1.15, color: 'var(--color-cream)', marginBottom: 24 }}>
-              Renaître à soi m'aime
-            </h2>
-            <div style={{ width: 48, height: 2, backgroundColor: 'var(--color-gold)', marginBottom: 24 }} />
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'rgba(250,247,242,0.72)', marginBottom: 20, fontWeight: 300 }}>
-              Un livre écrit au cœur de l'expérience — celui de traverser ses propres tempêtes intérieures et d'en revenir transformé. Ce n'est pas un manuel, c'est un compagnon de route.
-            </p>
-            <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, letterSpacing: '0.1em', color: 'var(--color-forest)', backgroundColor: 'var(--color-gold)', padding: '14px 32px', borderRadius: 2, textDecoration: 'none' }}>
-              Commander le livre
+            <p className="book-quote">Ce n'est pas un manuel, c'est un compagnon de route.</p>
+            <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
+              Commander le livre <Arrow />
             </a>
-          </div>
+          </Reveal>
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ position: 'relative', width: 280 }}>
-              <div style={{ width: 280, height: 400, borderRadius: '0 4px 4px 0', overflow: 'hidden', boxShadow: '8px 12px 40px rgba(0,0,0,0.4)', position: 'relative', backgroundColor: '#1e3830' }}>
-                <img src={IMG.temoignage} alt="Couverture du livre" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(45,74,62,0.7) 0%, rgba(12,24,18,0.85) 100%)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '32px 28px' }}>
-                  <p style={{ fontFamily: 'var(--font-display)', fontSize: 11, letterSpacing: '0.2em', color: 'var(--color-gold)', marginBottom: 10 }}>CÉDRIC CONCHE</p>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 300, color: 'var(--color-cream)', lineHeight: 1.2 }}>
-                    Renaître<br />à soi m'aime
-                  </h3>
+          <Reveal delay={150} className="book-stage">
+            <div className="book">
+              <div className="book-glow" />
+              <div className="book-cover">
+                <img src={IMG.temoignage} alt="Couverture du livre" />
+                <div className="book-cover-overlay">
+                  <p style={{ fontFamily: 'var(--font-display)', fontSize: 11, letterSpacing: '0.24em', color: 'var(--color-gold)' }}>CÉDRIC CONCHE</p>
+                  <div>
+                    <div style={{ width: 32, height: 1, backgroundColor: 'var(--color-gold)', marginBottom: 16 }} />
+                    <h3 style={{ fontSize: 30, fontWeight: 300, color: 'var(--color-cream)', lineHeight: 1.15 }}>
+                      Renaître<br /><em style={{ color: 'var(--color-gold-light)' }}>à soi m'aime</em>
+                    </h3>
+                  </div>
                 </div>
+                <div className="book-cover-frame" />
               </div>
+              <div className="book-spine" />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── 5. TARIFS ── */}
-      <section id="tarifs" style={{ backgroundColor: 'var(--color-cream)', padding: '120px 48px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }} className="two-col-grid">
-          <div>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-              Tarifs
-            </p>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 400, lineHeight: 1.15, color: 'var(--color-forest)', marginBottom: 24 }}>
-              Un investissement dans ta paix intérieure
-            </h2>
-            <GoldLine />
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: 20, fontWeight: 300 }}>
+      <section id="tarifs" className="section" style={{ backgroundColor: 'var(--color-cream)' }}>
+        <div className="wrap grid-2">
+          <Reveal>
+            <p className="eyebrow">Tarifs</p>
+            <h2 className="title">Un investissement dans ta <em>paix intérieure</em></h2>
+            <div className="gold-line" />
+            <p className="lead">
               Chaque séance est un espace unique, construit ensemble en fonction de ce que tu traverses.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
-            <div style={{ backgroundColor: 'var(--color-beige)', border: '1px solid var(--color-beige-dark)', borderRadius: 8, padding: '48px 40px', boxShadow: '0 8px 32px rgba(45,74,62,0.08)' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
-                <div>
-                  <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, letterSpacing: '0.2em', color: 'var(--color-gold)', marginBottom: 6 }}>OFFERT</p>
-                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 32, fontWeight: 500, color: 'var(--color-forest)' }}>Premier échange</h3>
-                </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 48, fontWeight: 300, color: 'var(--color-forest)', lineHeight: 1 }}>0€</div>
+          <Reveal delay={150}>
+            <div className="price-card">
+              <span className="price-ribbon">OFFERT</span>
+              <div className="price-head">
+                <h3>Premier échange</h3>
+                <div className="price-value">0€</div>
               </div>
-              <a href="#contact" style={{ display: 'block', textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, letterSpacing: '0.1em', color: 'var(--color-cream)', backgroundColor: 'var(--color-forest)', padding: '14px 32px', borderRadius: 2, textDecoration: 'none' }}>
-                Réserver mon échange gratuit
+              <a href="#contact" className="btn btn-forest btn-block">
+                Réserver mon échange gratuit <Arrow />
               </a>
-              <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--color-stone)', marginTop: 16 }}>Séance individuelle : 80€ · 60 minutes</p>
+              <div className="price-alt">
+                <span>Séance individuelle · 60 minutes</span>
+                <strong>80€</strong>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── 6. CONTACT ── */}
-      <section id="contact" style={{ backgroundColor: 'var(--color-beige)', padding: '120px 48px' }}>
-        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.25em', color: 'var(--color-gold)', textTransform: 'uppercase', marginBottom: 16 }}>
-            Contact
-          </p>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 400, lineHeight: 1.15, color: 'var(--color-forest)', marginBottom: 24 }}>
-            Échangeons ensemble
-          </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: 40, fontWeight: 300 }}>
-            Retrouve-moi sur les réseaux sociaux ou découvre mon livre directement via les liens ci-dessous :
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <a href={LIENS.facebook} target="_blank" rel="noopener noreferrer" style={{ padding: '14px 28px', backgroundColor: 'var(--color-forest)', color: 'var(--color-cream)', textDecoration: 'none', borderRadius: 2, fontSize: 13, fontWeight: 500 }}>
-              Facebook
-            </a>
-            <a href={LIENS.instagram} target="_blank" rel="noopener noreferrer" style={{ padding: '14px 28px', backgroundColor: 'var(--color-forest)', color: 'var(--color-cream)', textDecoration: 'none', borderRadius: 2, fontSize: 13, fontWeight: 500 }}>
-              Instagram
-            </a>
-            <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" style={{ padding: '14px 28px', backgroundColor: 'var(--color-gold)', color: 'var(--color-forest)', textDecoration: 'none', borderRadius: 2, fontSize: 13, fontWeight: 500 }}>
-              Mon Livre
-            </a>
+      <section id="contact" className="section contact">
+        <div className="wrap contact-inner">
+          <Reveal>
+            <p className="eyebrow centered">Contact</p>
+            <h2 className="title">Échangeons <em>ensemble</em></h2>
+            <p className="lead">
+              Retrouve-moi sur les réseaux sociaux ou découvre mon livre directement via les liens ci-dessous :
+            </p>
+          </Reveal>
+
+          <div className="contact-cards">
+            <Reveal delay={0}>
+              <a href={LIENS.facebook} target="_blank" rel="noopener noreferrer" className="contact-card">
+                <span className="contact-card-icon"><FacebookIcon size={20} /></span>
+                <span className="contact-card-title">Facebook</span>
+                <span className="contact-card-sub">Me suivre</span>
+              </a>
+            </Reveal>
+            <Reveal delay={100}>
+              <a href={LIENS.instagram} target="_blank" rel="noopener noreferrer" className="contact-card">
+                <span className="contact-card-icon"><InstagramIcon size={20} /></span>
+                <span className="contact-card-title">Instagram</span>
+                <span className="contact-card-sub">Me suivre</span>
+              </a>
+            </Reveal>
+            <Reveal delay={200}>
+              <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" className="contact-card">
+                <span className="contact-card-icon"><BookIcon size={20} /></span>
+                <span className="contact-card-title">Mon Livre</span>
+                <span className="contact-card-sub">Commander</span>
+              </a>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ backgroundColor: 'var(--color-forest)', padding: '32px 48px', color: 'var(--color-cream)', textAlign: 'center', fontSize: 13, opacity: 0.9 }}>
-        <p>© {new Date().getFullYear()} Cédric Conche — Renaître à soi m'aime. Tous droits réservés.</p>
+      <footer className="footer">
+        <div className="wrap">
+          <div className="footer-top">
+            <div>
+              <a href="#accueil" className="logo">
+                <div className="logo-name">CÉDRIC CONCHE</div>
+                <div className="logo-tag">renaître à soi m'aime</div>
+              </a>
+              <p className="footer-motto">Comprendre. Accepter. Transformer. Renaître à soi m'aime.</p>
+            </div>
+            <div>
+              <p className="footer-heading">Navigation</p>
+              <ul className="footer-links">
+                {NAV.map(n => <li key={n.href}><a href={n.href}>{n.label}</a></li>)}
+              </ul>
+            </div>
+            <div>
+              <p className="footer-heading">Me retrouver</p>
+              <ul className="footer-links">
+                <li><a href={LIENS.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                <li><a href={LIENS.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href={LIENS.livre} target="_blank" rel="noopener noreferrer">Mon livre</a></li>
+              </ul>
+            </div>
+          </div>
+          <p className="footer-bottom">© {new Date().getFullYear()} Cédric Conche — Renaître à soi m'aime. Tous droits réservés.</p>
+        </div>
       </footer>
 
     </div>
