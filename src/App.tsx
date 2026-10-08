@@ -1,5 +1,5 @@
 import { useState, useEffect, type CSSProperties, type ReactNode } from 'react'
-import imgHero from '@/imports/408-1.jpg'
+import imgCouverture from '@/imports/408-1.jpg'
 import imgPortrait from '@/imports/1011-3.jpg'
 import imgAccompagnements from '@/imports/1012-2.jpg'
 
@@ -12,10 +12,10 @@ const LIENS = {
 // ───────────────────────────────────────────────────────────
 
 const IMG = {
-  hero: imgHero,
+  hero: imgCouverture,
+  livre: imgCouverture,
   portrait: imgPortrait,
   accompagnements: imgAccompagnements,
-  temoignage: 'https://images.unsplash.com/photo-1595104615356-cbe9c4364513?w=700&h=800&fit=crop&auto=format',
 }
 
 const NAV = [
@@ -202,7 +202,7 @@ export default function App() {
           <Reveal delay={200} className="hero-media">
             <div className="hero-frame" />
             <div className="hero-img">
-              <img src={IMG.hero} alt="Cédric Conche" />
+              <img src={IMG.hero} alt="Couverture du livre Renaître à soi-m'aime de Cédric Conche" />
             </div>
             <a href="#tarifs" className="hero-badge">
               <span className="hero-badge-dot" />
@@ -319,17 +319,7 @@ export default function App() {
             <div className="book">
               <div className="book-glow" />
               <div className="book-cover">
-                <img src={IMG.temoignage} alt="Couverture du livre" />
-                <div className="book-cover-overlay">
-                  <p style={{ fontFamily: 'var(--font-display)', fontSize: 11, letterSpacing: '0.24em', color: 'var(--color-gold)' }}>CÉDRIC CONCHE</p>
-                  <div>
-                    <div style={{ width: 32, height: 1, backgroundColor: 'var(--color-gold)', marginBottom: 16 }} />
-                    <h3 style={{ fontSize: 30, fontWeight: 300, color: 'var(--color-cream)', lineHeight: 1.15 }}>
-                      Renaître<br /><em style={{ color: 'var(--color-gold-light)' }}>à soi m'aime</em>
-                    </h3>
-                  </div>
-                </div>
-                <div className="book-cover-frame" />
+                <img src={IMG.livre} alt="Couverture du livre Renaître à soi-m'aime de Cédric Conche" />
               </div>
               <div className="book-spine" />
             </div>
