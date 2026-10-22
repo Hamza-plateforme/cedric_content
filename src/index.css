@@ -567,8 +567,13 @@ img {
 
 /* ── Qui suis-je ────────────────────────────────────── */
 
+.about-grid {
+  align-items: start;
+}
+
 .about-media {
-  position: relative;
+  position: sticky;
+  top: 110px;
 }
 
 .about-img {
@@ -682,6 +687,29 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.acc-hook {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-forest);
+  margin-bottom: 24px;
+}
+
+.acc-quote {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--color-forest);
+  padding-left: 22px;
+  border-left: 2px solid var(--color-gold);
+  margin-top: 28px;
+}
+
+.acc-quote em {
+  color: var(--color-gold);
 }
 
 .cards {
@@ -1115,7 +1143,7 @@ img {
   .hero-badge { left: -16px; }
   .scroll-cue { display: none; }
 
-  .about-media { max-width: 460px; }
+  .about-media { max-width: 460px; position: relative; top: 0; }
   .about-tag { right: -8px; }
   .about-dots { left: -12px; }
 

@@ -230,7 +230,7 @@ export default function App() {
 
       {/* ── 2. QUI SUIS-JE ── */}
       <section id="qui-suis-je" className="section" style={{ backgroundColor: 'var(--color-beige)' }}>
-        <div className="wrap grid-2">
+        <div className="wrap grid-2 about-grid">
           <Reveal className="about-media">
             <div className="about-dots" />
             <div className="about-img">
@@ -244,15 +244,24 @@ export default function App() {
           <div>
             <Reveal>
               <p className="eyebrow">Qui suis-je ?</p>
-              <h2 className="title">Un accompagnement avant tout <em>humain</em></h2>
+              <h2 className="title">Cédric <em>Conche</em></h2>
               <div className="gold-line" />
             </Reveal>
             <Reveal delay={120}>
-              <p className="text" style={{ marginBottom: 16 }}>
-                Un mari, un papa, un homme qui a consacré 20 années de sa vie à l'armée, dont 6 ans comme fusilier marin et 14 ans comme marin-pompier de Marseille.
+              <p className="lead acc-hook">
+                Un mari, un papa, un homme qui a consacré 20 années de sa vie à l’armée, dont 6 ans comme fusilier marin et 14 ans comme marin-pompier de Marseille.
               </p>
-              <p className="text">
-                Grand sportif, amoureux de la nature et profondément attaché à l'humain, je suis également hypersensible et empathique.
+              <p className="text" style={{ marginBottom: 16 }}>
+                Grand sportif, amoureux de la nature et profondément attaché à l’humain, je suis également hypersensible et empathique. Mon parcours de vie m’a amené à traverser différentes épreuves et à entreprendre un profond travail sur moi-même à travers la thérapie et le coaching.
+              </p>
+              <p className="text" style={{ marginBottom: 16 }}>
+                Ce cheminement m’a permis de mieux comprendre mes blessures, mes émotions et les schémas qui pouvaient influencer ma vie, mais surtout de découvrir qui je suis profondément.
+              </p>
+              <p className="text" style={{ marginBottom: 16 }}>
+                Aujourd’hui, par mon expérience, mon cheminement et les connaissances que j’ai acquises, je souhaite accompagner celles et ceux qui ressentent le besoin de mieux se comprendre, de donner du sens à leur vécu et d’avancer sur leur chemin de vie.
+              </p>
+              <p className="acc-quote" style={{ marginTop: 24 }}>
+                Je crois profondément que derrière nos pensées, nos croyances et nos conditionnements, se trouve une nature plus profonde de nous-mêmes que nous pouvons apprendre à découvrir.
               </p>
             </Reveal>
             <Reveal delay={200}>
@@ -260,8 +269,8 @@ export default function App() {
                 <span className="intention-quote" aria-hidden="true">“</span>
                 <p className="intention-title">Mon intention</p>
                 <p className="text" style={{ fontSize: 15 }}>Je ne suis pas là pour te dire qui tu es.</p>
-                <p className="text" style={{ fontSize: 15 }}>Je suis là pour t'accompagner afin que tu puisses le découvrir par toi-même.</p>
-                <p className="intention-motto">Comprendre. Accepter. Transformer. Renaître à soi m'aime.</p>
+                <p className="text" style={{ fontSize: 15 }}>Je suis là pour t’accompagner afin que tu puisses le découvrir par toi-même.</p>
+                <p className="intention-motto">Comprendre. Accepter. Transformer. Renaître à soi m’aime.</p>
               </div>
               <a href="#accompagnements" className="btn btn-forest">En savoir plus <Arrow /></a>
             </Reveal>
@@ -278,8 +287,17 @@ export default function App() {
                 <p className="eyebrow">Mes accompagnements</p>
                 <h2 className="title">Un espace pour te <em>retrouver</em></h2>
                 <div className="gold-line" />
-                <p className="lead">
-                  Tu n'as peut-être pas besoin de changer.<br />Tu as peut-être simplement besoin de te retrouver.
+                <p className="lead acc-hook">
+                  Tu n’as peut-être pas besoin de changer.<br />Tu as peut-être simplement besoin de te retrouver.
+                </p>
+                <p className="text" style={{ marginBottom: 16 }}>
+                  Ce que tu ressens, ce que tu répètes, ce qui te bloque ou ce dont tu cherches à t’échapper a souvent une histoire.
+                </p>
+                <p className="text">
+                  Mes accompagnements t’aident à comprendre cette histoire, à écouter tes émotions, à dénouer tes blessures, à sortir de certains mécanismes et à retrouver progressivement la personne que tu es profondément.
+                </p>
+                <p className="acc-quote">
+                  Parce que la véritable transformation ne commence pas lorsque tu deviens quelqu’un d’autre. <em>Elle commence lorsque tu reviens à toi.</em>
                 </p>
               </div>
             </Reveal>
