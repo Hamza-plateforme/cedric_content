@@ -8,7 +8,10 @@ const LIENS = {
   facebook: 'https://www.facebook.com/share/1UiAxqutZG/?mibextid=wwXIfr',
   instagram: 'https://www.instagram.com/renaitre_a_soi_m_aime?stkn=aTE2b2ZucHZ3NjM1&utm_source=qr',
   livre: 'https://amzn.eu/d/05uUEMwk',
+  email: 'renaitreasoimaime@outlook.fr',
 }
+const MAILTO = `mailto:${LIENS.email}`
+const MAILTO_ECHANGE = `${MAILTO}?subject=${encodeURIComponent('Premier échange offert')}`
 // ───────────────────────────────────────────────────────────
 
 const IMG = {
@@ -73,11 +76,16 @@ function BookIcon({ size = 16 }: { size?: number }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2.5z" /><path d="M8 7h7" /></svg>
 }
 
+function MailIcon({ size = 16 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
+}
+
 function Socials() {
   return (
     <div className="socials">
       <a className="social-icon" href={LIENS.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FacebookIcon /></a>
       <a className="social-icon" href={LIENS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+      <a className="social-icon" href={MAILTO} aria-label={`E-mail : ${LIENS.email}`}><MailIcon /></a>
     </div>
   )
 }
@@ -311,7 +319,7 @@ export default function App() {
             </p>
             <p className="book-quote">Ce n'est pas un manuel, c'est un compagnon de route.</p>
             <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
-              Commander le livre <Arrow />
+              Acheter le livre sur Amazon <Arrow />
             </a>
           </Reveal>
 
@@ -346,7 +354,7 @@ export default function App() {
                 <h3>Premier échange</h3>
                 <div className="price-value">0€</div>
               </div>
-              <a href="#contact" className="btn btn-forest btn-block">
+              <a href={MAILTO_ECHANGE} className="btn btn-forest btn-block">
                 Réserver mon échange gratuit <Arrow />
               </a>
               <div className="price-alt">
@@ -365,30 +373,37 @@ export default function App() {
             <p className="eyebrow centered">Contact</p>
             <h2 className="title">Échangeons <em>ensemble</em></h2>
             <p className="lead">
-              Retrouve-moi sur les réseaux sociaux ou découvre mon livre directement via les liens ci-dessous :
+              Écris-moi par e-mail, retrouve-moi sur les réseaux sociaux ou procure-toi mon livre via les liens ci-dessous :
             </p>
           </Reveal>
 
           <div className="contact-cards">
             <Reveal delay={0}>
+              <a href={MAILTO} className="contact-card">
+                <span className="contact-card-icon"><MailIcon size={20} /></span>
+                <span className="contact-card-title">E-mail</span>
+                <span className="contact-card-sub contact-card-email">{LIENS.email}</span>
+              </a>
+            </Reveal>
+            <Reveal delay={100}>
               <a href={LIENS.facebook} target="_blank" rel="noopener noreferrer" className="contact-card">
                 <span className="contact-card-icon"><FacebookIcon size={20} /></span>
                 <span className="contact-card-title">Facebook</span>
                 <span className="contact-card-sub">Me suivre</span>
               </a>
             </Reveal>
-            <Reveal delay={100}>
+            <Reveal delay={200}>
               <a href={LIENS.instagram} target="_blank" rel="noopener noreferrer" className="contact-card">
                 <span className="contact-card-icon"><InstagramIcon size={20} /></span>
                 <span className="contact-card-title">Instagram</span>
                 <span className="contact-card-sub">Me suivre</span>
               </a>
             </Reveal>
-            <Reveal delay={200}>
+            <Reveal delay={300}>
               <a href={LIENS.livre} target="_blank" rel="noopener noreferrer" className="contact-card">
                 <span className="contact-card-icon"><BookIcon size={20} /></span>
                 <span className="contact-card-title">Mon Livre</span>
-                <span className="contact-card-sub">Commander</span>
+                <span className="contact-card-sub">Acheter sur Amazon</span>
               </a>
             </Reveal>
           </div>
@@ -417,7 +432,8 @@ export default function App() {
               <ul className="footer-links">
                 <li><a href={LIENS.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></li>
                 <li><a href={LIENS.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a href={LIENS.livre} target="_blank" rel="noopener noreferrer">Mon livre</a></li>
+                <li><a href={LIENS.livre} target="_blank" rel="noopener noreferrer">Acheter mon livre</a></li>
+                <li><a href={MAILTO}>{LIENS.email}</a></li>
               </ul>
             </div>
           </div>
