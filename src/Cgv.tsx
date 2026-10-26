@@ -24,9 +24,19 @@ const SOMMAIRE = [
 
 export default function Cgv() {
   return (
+    <>
+    <header className="header scrolled">
+      <div className="wrap header-inner">
+        <a href="./" className="logo">
+          <div className="logo-name">CÉDRIC CONCHE</div>
+          <div className="logo-tag">renaître à soi m'aime</div>
+        </a>
+        <a href="./" className="btn btn-gold btn-sm">Retour au site</a>
+      </div>
+    </header>
     <main className="legal">
       <div className="wrap legal-wrap">
-        <a href="#accueil" className="legal-back">← Retour au site</a>
+        <a href="./" className="legal-back">← Retour au site</a>
         <p className="eyebrow">Informations légales</p>
         <h1 className="title">Conditions générales de vente</h1>
         <p className="legal-date">Dernière mise à jour : 23 octobre 2026</p>
@@ -109,9 +119,19 @@ export default function Cgv() {
         </Article>
 
         <div className="legal-foot">
-          <a href="#accueil" className="btn btn-forest">Retour au site</a>
+          <a href="./" className="btn btn-forest">Retour au site</a>
         </div>
       </div>
     </main>
+    <footer className="footer" style={{ paddingTop: 32 }}>
+      <div className="wrap">
+        <p className="footer-bottom" style={{ paddingTop: 0 }}>
+          © {new Date().getFullYear()} Cédric Conche — Renaître à soi m'aime. Tous droits réservés.
+          <span className="footer-sep">·</span>
+          <a href="./">Retour au site</a>
+        </p>
+      </div>
+    </footer>
+    </>
   )
 }

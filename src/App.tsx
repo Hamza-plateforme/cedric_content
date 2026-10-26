@@ -1,5 +1,4 @@
 import { useState, useEffect, type CSSProperties, type ReactNode } from 'react'
-import Cgv from '@/Cgv'
 import imgCouverture from '@/imports/408-1.jpg'
 import imgPortrait from '@/imports/1011-3.jpg'
 import imgAccompagnements from '@/imports/1012-2.jpg'
@@ -103,26 +102,6 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [active, setActive] = useState('')
-  const [page, setPage] = useState(() => (window.location.hash === '#cgv' ? 'cgv' : 'home'))
-
-  // Navigation entre l'accueil et la page des CGV (#cgv)
-  useEffect(() => {
-    const onHash = () => setPage(window.location.hash === '#cgv' ? 'cgv' : 'home')
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [])
-
-  useEffect(() => {
-    setMenuOpen(false)
-    if (page === 'cgv') {
-      window.scrollTo(0, 0)
-      document.title = 'Conditions générales de vente — Renaître à soi m’aime'
-      return
-    }
-    document.title = 'Cédric Conche — Renaître à soi m’aime | Accompagnement intérieur'
-    const target = window.location.hash && document.querySelector(window.location.hash)
-    if (target) target.scrollIntoView()
-  }, [page])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -144,7 +123,7 @@ export default function App() {
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' })
     els.forEach(el => io.observe(el))
     return () => io.disconnect()
-  }, [page])
+  }, [])
 
   // Lien de navigation actif selon la section visible
   useEffect(() => {
@@ -156,7 +135,7 @@ export default function App() {
     }, { rootMargin: '-45% 0px -50% 0px' })
     sections.forEach(s => io.observe(s))
     return () => io.disconnect()
-  }, [page])
+  }, [])
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -199,8 +178,6 @@ export default function App() {
           </div>
         </div>
       </header>
-
-      {page === 'cgv' ? <Cgv /> : <>
 
       {/* ── 1. ACCUEIL ── */}
       <section id="accueil" className="hero">
@@ -451,8 +428,6 @@ export default function App() {
         </div>
       </section>
 
-      </>}
-
       {/* ── FOOTER ── */}
       <footer className="footer">
         <div className="wrap">
@@ -483,7 +458,7 @@ export default function App() {
           <p className="footer-bottom">
             © {new Date().getFullYear()} Cédric Conche — Renaître à soi m'aime. Tous droits réservés.
             <span className="footer-sep">·</span>
-            <a href="#cgv">Conditions générales de vente</a>
+            <a href="cgv.html">Conditions générales de vente</a>
           </p>
         </div>
       </footer>

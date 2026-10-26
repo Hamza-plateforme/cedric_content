@@ -15,6 +15,13 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,
+      rollupOptions: {
+        // Deux pages : l'accueil et les conditions générales de vente
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          cgv: path.resolve(__dirname, 'cgv.html'),
+        },
+      },
     },
     plugins: [
       react(),
