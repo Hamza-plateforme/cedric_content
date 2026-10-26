@@ -1,4 +1,5 @@
 import { useState, useEffect, type CSSProperties, type ReactNode } from 'react'
+import { PAGES_LEGALES } from '@/Legal'
 import imgCouverture from '@/imports/408-1.jpg'
 import imgPortrait from '@/imports/1011-3.jpg'
 import imgAccompagnements from '@/imports/1012-2.jpg'
@@ -457,8 +458,12 @@ export default function App() {
           </div>
           <p className="footer-bottom">
             © {new Date().getFullYear()} Cédric Conche — Renaître à soi m'aime. Tous droits réservés.
-            <span className="footer-sep">·</span>
-            <a href="cgv.html">Conditions générales de vente</a>
+            {PAGES_LEGALES.map(p => (
+              <span key={p.href}>
+                <span className="footer-sep">·</span>
+                <a href={p.href}>{p.label}</a>
+              </span>
+            ))}
           </p>
         </div>
       </footer>

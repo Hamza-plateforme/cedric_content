@@ -1224,6 +1224,38 @@ img {
   border-radius: 4px;
 }
 
+.legal-intro p {
+  font-size: 15px;
+  line-height: 1.85;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.legal-intro a {
+  color: var(--color-forest);
+}
+
+.legal-intro strong {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.legal-intro .legal-info {
+  margin-bottom: 40px;
+}
+
+.legal-info li {
+  font-size: 15px;
+  line-height: 1.85;
+  font-weight: 300;
+  color: var(--color-text-muted);
+}
+
+.legal-article .legal-info {
+  margin-block: 14px;
+}
+
 .legal-foot {
   margin-top: 48px;
   padding-top: 40px;

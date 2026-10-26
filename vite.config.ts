@@ -16,10 +16,12 @@ export default defineConfig(({ mode }) => {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,
       rollupOptions: {
-        // Deux pages : l'accueil et les conditions générales de vente
+        // L'accueil et les pages légales
         input: {
           main: path.resolve(__dirname, 'index.html'),
           cgv: path.resolve(__dirname, 'cgv.html'),
+          retractation: path.resolve(__dirname, 'retractation.html'),
+          mentions: path.resolve(__dirname, 'mentions-legales.html'),
         },
       },
     },
