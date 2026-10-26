@@ -377,7 +377,7 @@ export default function App() {
               </a>
               <div className="price-alt">
                 <span>Séance individuelle · 60 minutes</span>
-                <strong>80€</strong>
+                <strong>70€</strong>
               </div>
             </div>
           </Reveal>

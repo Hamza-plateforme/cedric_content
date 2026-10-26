@@ -115,7 +115,8 @@ export default function Cgv() {
         <Article id="cgv-8" num={8} titre="Programmes mensuels">
           <p>Les caractéristiques du programme, le nombre de séances, la durée, le prix, les modalités de paiement et les conditions de renouvellement sont communiqués avant toute souscription.</p>
           <p>Aucun engagement de durée, renouvellement automatique ou frais de résiliation ne s’applique sans avoir été clairement porté à la connaissance du client et accepté par celui-ci.</p>
-          {/* Texte reçu tronqué : phrase sur la suspension / l'arrêt d'un programme et articles suivants à compléter */}
+          {/* Texte reçu tronqué, laissé tel quel à la demande de Cédric — à compléter */}
+          <p>Les demandes de suspension, de report ou d’arrêt d’un programme sont examinées conformément aux conditions communiquées lors de la souscription et aux dis</p>
         </Article>
 
         <div className="legal-foot">
