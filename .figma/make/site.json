@@ -1,7 +1,18 @@
 {
-  "description": "This professional showcase website offers personal coaching services by Cédric Conche, helping individuals transform their inner struggles into peace and strength.",
+  "title": "Cédric Conche — Renaître à soi m’aime | Accompagnement intérieur",
+  "description": "Cédric Conche t’accompagne pour comprendre tes émotions, guérir tes blessures intérieures et retrouver ta paix intérieure. Premier échange offert. Auteur du livre « Renaître à soi m’aime ».",
+  "language": "fr",
   "robots": {
-    "index": false
+    "index": true
+  },
+  "icons": {
+    "icon": "/cedric_content/favicon.svg"
+  },
+  "openGraph": {
+    "image": "https://hamza-plateforme.github.io/cedric_content/og-image.jpg"
+  },
+  "customScripts": {
+    "headEnd": "<meta property=\"og:type\" content=\"website\" />\n    <meta property=\"og:locale\" content=\"fr_FR\" />\n    <meta property=\"og:url\" content=\"https://hamza-plateforme.github.io/cedric_content/\" />\n    <meta property=\"og:site_name\" content=\"Renaître à soi m’aime\" />\n    <link rel=\"canonical\" href=\"https://hamza-plateforme.github.io/cedric_content/\" />\n    <meta name=\"theme-color\" content=\"#2D4A3E\" />"
   },
   "accessibility": {
     "addBypassLinks": false,
